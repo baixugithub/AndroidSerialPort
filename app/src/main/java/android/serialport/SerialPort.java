@@ -37,7 +37,7 @@ public class SerialPort {
 	private FileInputStream mFileInputStream;
 	private FileOutputStream mFileOutputStream;
 
-	public SerialPort(File device, int baudrate) throws SecurityException, IOException {
+	public SerialPort(File device, int baudrate, int flags) throws SecurityException, IOException {
 
 		/* Check access permission */
 		if (!device.canRead() || !device.canWrite()) {
@@ -45,7 +45,7 @@ public class SerialPort {
 				/* Missing read/write permission, trying to chmod the file */
 				Process su;
 				su = Runtime.getRuntime().exec("/system/bin/su");
-				String cmd = "chmod 777 " + device.getAbsolutePath() + "\n"
+				String cmd = "chmod 666 " + device.getAbsolutePath() + "\n"
 						+ "exit\n";
 				/*String cmd = "chmod 777 /dev/s3c_serial0" + "\n"
 				+ "exit\n";*/
@@ -60,7 +60,7 @@ public class SerialPort {
 			}
 		}
 
-		mFd = open(device.getAbsolutePath(), baudrate);
+		mFd = open(device.getAbsolutePath(), baudrate, flags);
 		if (mFd == null) {
 			Log.e(TAG, "native open returns null");
 			throw new IOException();
@@ -79,7 +79,7 @@ public class SerialPort {
 	}
 
 	// JNI
-	private native static FileDescriptor open(String path, int baudrate);
+	private native static FileDescriptor open(String path, int baudrate, int flags);
 	public native void close();
 	static {
 		System.loadLibrary("serial_port");

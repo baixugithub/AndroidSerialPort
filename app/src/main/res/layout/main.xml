@@ -2,35 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="hello" />
     <Button
-		android:id="@+id/ButtonSent"
-		android:text="Console"
+		android:id="@+id/bt_serial_open"
+		android:text="打开串口"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		 
-	/>
+		android:layout_height="wrap_content"/>
+
     <Button
-		android:id="@+id/ButtonSent1"
-		android:text="send"
+		android:id="@+id/bt_serial_send"
+		android:text="发送串口"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		 
-	/>
+		android:layout_height="wrap_content"/>
+
     <Button
-		android:id="@+id/ButtonRec"
-		android:text="recive"
+		android:id="@+id/bt_serial_receive"
+		android:text="接收串口"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		 
-	/>
-     <EditText android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:hint="Emission"
-		android:id="@+id/EditTextEmission" android:lines="1"></EditText>
+		android:layout_height="wrap_content"/>
+
+     <EditText
+         android:id="@+id/EditTextEmission"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:hint="发送"
+		 android:lines="1"/>
 
 </LinearLayout>

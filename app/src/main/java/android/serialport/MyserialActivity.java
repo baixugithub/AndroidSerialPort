@@ -13,100 +13,75 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-//import android.serialport.sample.R;
-
 public class MyserialActivity extends Activity {
-	/**
-	 * Called when the activity is first created.
-	 */
-
 	EditText mReception;
 	FileOutputStream mOutputStream;
 	FileInputStream mInputStream;
-	SerialPort sp;
-	ReadThread  mReadThread;
+    SerialPort sp;
+    ReadThread  mReadThread;
+
     @Override
-   
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-  
-    
-        final Button buttonSetup = (Button)findViewById(R.id.ButtonSent);
-        buttonSetup.setOnClickListener(new View.OnClickListener() {
+
+        final Button buttonOpenSerial = (Button)findViewById(R.id.bt_serial_open);
+        buttonOpenSerial.setOnClickListener(new View.OnClickListener() {
 		public void onClick(View v) {
             mReception = (EditText) findViewById(R.id.EditTextEmission);
-			  
+
             try {
-			    sp=new SerialPort(new File("/dev/ttyS2"),9600);
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+			    sp=new SerialPort(new File("/dev/ttyAMA0"), 115200, 0);
+			} catch (SecurityException | IOException e) {
 				e.printStackTrace();
 			}
 
-		     // mReadThread = new ReadThread();
+            // mReadThread = new ReadThread();
 			//	mReadThread.start();
 		      
 		      mInputStream=(FileInputStream) sp.getInputStream();
 			
-		     //Toast.makeText(getApplicationContext(), "open",
-		    		    // Toast.LENGTH_SHORT).show();
-			
-		}
-	});
-    
-    
-    
-    final Button buttonsend= (Button)findViewById(R.id.ButtonSent1);
-    buttonsend.setOnClickListener(new View.OnClickListener() {
-		public void onClick(View v) {
-			
-			try {
-				mOutputStream=(FileOutputStream) sp.getOutputStream();
-				
-				mOutputStream.write(new String("send").getBytes());
-				mOutputStream.write('\n');
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			  
-		   
-		      Toast.makeText(getApplicationContext(), "send",
+		     Toast.makeText(getApplicationContext(), "串口打开成功",
 		    		     Toast.LENGTH_SHORT).show();
 			
 		}
-	});
+	    });
     
-    
-    final Button buttonrec= (Button)findViewById(R.id.ButtonRec);
-    buttonrec.setOnClickListener(new View.OnClickListener() {
-		public void onClick(View v) {
-			int size;
-			
-			try {
-			byte[] buffer = new byte[64];
-			if (mInputStream == null) return;
-			size = mInputStream.read(buffer);
-			if (size > 0) {
-				onDataReceived(buffer, size);
-				
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-			
-			
-			
-			
-		}
-	});
-    
-   
 
-	
-    
+        final Button buttonsend= (Button)findViewById(R.id.bt_serial_send);
+        buttonsend.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                try {
+                    mOutputStream=(FileOutputStream) sp.getOutputStream();
+
+                    mOutputStream.write(mReception.getText().toString().getBytes());
+                    mOutputStream.write('\n');
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Toast.makeText(MyserialActivity.this, "发送数据 " + mReception + " 成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final Button buttonrec= (Button)findViewById(R.id.bt_serial_receive);
+        buttonrec.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int size;
+                try {
+                    byte[] buffer = new byte[64];
+                    if (mInputStream == null) return;
+                    size = mInputStream.read(buffer);
+                    if (size > 0) {
+                        onDataReceived(buffer, size);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
     
     
@@ -134,8 +109,6 @@ public class MyserialActivity extends Activity {
 		}
 	}
 
-
-    
     void onDataReceived(final byte[] buffer, final int size) {
 		runOnUiThread(new Runnable() {
 			public void run() {
@@ -145,6 +118,5 @@ public class MyserialActivity extends Activity {
 			}
 		});
 	}
-    
-    
+
 }

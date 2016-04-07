@@ -12,6 +12,12 @@ android:
 
 jdk: oraclejdk7
 
+git:
+  submodules: false
+before_install:
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule init && git submodule update
+
 notifications:
   email: false
 
@@ -36,6 +42,7 @@ before_install:
   #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
   # newest Android NDK
   #- if [ `uname -m` = x86_64]; then wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -O ndk.tgz; else wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86.tar.bz2 -O ndk.tgz; fi
+  #- if [ `uname -m` = x86_64]; then wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -P $HOME/android-ndk-root; else wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86.tar.bz2 -P $HOME/android-ndk-root; fi
   #- tar -xf ndk.tgz
   #- export ANDROID_NDK_HOME=`pwd`/android-ndk-r9c
   #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
@@ -45,3 +52,14 @@ before_install:
 
 script:
   - ./gradlew clean build
+
+before_deploy:
+  #- mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/slideback.apk
+deploy:
+  provider: releases
+  api_key:
+    secure: AAAAB3NzaC1yc2EAAAADAQABAAABAQC2dRO585/aj4RuZmFWQBJXqJuTg4zRv7xxE1TYHLCZy1mnoIvf6dXxOCp4pSSJLiGkkrobeKqfVK4eZ8QlyNYaJMu16R8Y6q2bGXaW3bhDDH9XnpmJqLdkrOz5d1tIUZsWx8iOQdvRES6lU56ddzWdqzFzH3bmUX1MRfeqlEfdUDDAa0Hu/rV3pQxnaTRJj8KT0yY1I0+4DJ8b1tGFOyRPt6eXu4nZDt6cQsAJAx8FHBKr5boVimb6cNllyMBdp15mUXaGSk6OB/UBIk20LR68j0THjU1h1V7cl9XC7vLX8XcpRdGd9s+W8yQKs1gbCThwVjiORxts+wh89F4IPUKP
+  file: app/build/outputs/apk/debug/*.apk
+  skip_cleanup: true
+  on:
+    tags: true

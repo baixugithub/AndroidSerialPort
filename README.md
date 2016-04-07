@@ -1,6 +1,8 @@
 ## AndroidSerialPort
 安卓串口相关操作
 
+[![Build Status](https://travis-ci.org/jp1017/AndroidSerialPort.svg?branch=master)](https://travis-ci.org/jp1017/AndroidSerialPort)
+
 <img src="https://cloud.githubusercontent.com/assets/7868514/13865849/dee51aa8-ecea-11e5-99cd-0d8efa532314.png" width="320" />
 
 ## 测试

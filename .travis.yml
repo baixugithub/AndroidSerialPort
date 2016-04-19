@@ -20,6 +20,7 @@ notifications:
 script:
   - ./gradlew assembleRelease
 before_deploy:
+  - gem install fir-cli
   - mv app/build/outputs/apk/release/androidserial-release-1-1.1.2-armeabi-2016-04-19.apk app/build/outputs/apk/AndroidSerial.apk
 deploy:
   provider: releases
@@ -31,3 +32,5 @@ deploy:
     tags: true
     all_branches: true
     repo: jp1017/AndroidSerialPort
+after_deploy:
+- fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag $TRAVIS_TAG`"

@@ -8,7 +8,7 @@ android:
   - android-23
   - extra-google-m2repository
   - extra-android-m2repository
-jdk: oraclejdk7
+jdk: openjdk7
 git:
   submodules: false
 before_install:
@@ -18,8 +18,9 @@ before_install:
 notifications:
   email: false
 script:
-- ./gradlew clean build
-before_deploy: 
+  - ./gradlew assembleRelease
+before_deploy:
+  - mv app/build/outputs/apk/release/androidserial-release-1-1.1.2-armeabi-2016-04-19.apk app/build/outputs/apk/AndroidSerial.apk
 deploy:
   provider: releases
   api_key:

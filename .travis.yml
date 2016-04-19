@@ -1,65 +1,32 @@
 language: android
-sudo: true
-
+sudo: false
 android:
-   components:
-    - tools
-    - platform-tools
-    - build-tools-23.0.2
-    - android-23
-    - extra-google-m2repository
-    - extra-android-m2repository
-
+  components:
+  - tools
+  - platform-tools
+  - build-tools-23.0.2
+  - android-23
+  - extra-google-m2repository
+  - extra-android-m2repository
 jdk: oraclejdk7
-
 git:
   submodules: false
 before_install:
-  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-  - git submodule init && git submodule update
-
+- git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
+- export ANDROID_NDK_HOME=$HOME/android-ndk-root
+- chmod +x gradlew
 notifications:
   email: false
-
-before_install:
-  - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
-  - export ANDROID_NDK_HOME=$HOME/android-ndk-root
-  # required libs for android build tools
-  #- sudo apt-get update
-  #- sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
-  # for gradle output style
-  #- export TERM=dumb
-  # newer version of gradle
-  #- wget http://services.gradle.org/distributions/gradle-2.10-bin.zip
-  #- unzip -qq gradle-2.10-bin.zip
-  #- export GRADLE_HOME=$PWD/gradle-2.10
-  #- export PATH=$GRADLE_HOME/bin:$PATH
-  - chmod +x gradlew
-  # newest Android SDK 22.3
-  #- wget http://dl.google.com/android/android-sdk_r22.3-linux.tgz
-  #- tar -zxf android-sdk_r22.3-linux.tgz
-  #- export ANDROID_HOME=`pwd`/android-sdk-linux
-  #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  # newest Android NDK
-  #- if [ `uname -m` = x86_64]; then wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -O ndk.tgz; else wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86.tar.bz2 -O ndk.tgz; fi
-  #- if [ `uname -m` = x86_64]; then wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -P $HOME/android-ndk-root; else wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86.tar.bz2 -P $HOME/android-ndk-root; fi
-  #- tar -xf ndk.tgz
-  #- export ANDROID_NDK_HOME=`pwd`/android-ndk-r9c
-  #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
-  # manually set sdk.dir variable, according to local paths
-  #- echo "sdk.dir=$ANDROID_HOME" > local.properties
-  #- echo yes | android update sdk -a -t tools,platform-tools,extra-android-support,extra-android-m2repository,android-19,build-tools-19.0.1,extra-google-google_play_services,extra-google-m2repository --force --no-ui
-
 script:
-  - ./gradlew clean build
-
-before_deploy:
-  #- mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/slideback.apk
+- ./gradlew clean build
+before_deploy: 
 deploy:
   provider: releases
   api_key:
-    secure: AAAAB3NzaC1yc2EAAAADAQABAAABAQC2dRO585/aj4RuZmFWQBJXqJuTg4zRv7xxE1TYHLCZy1mnoIvf6dXxOCp4pSSJLiGkkrobeKqfVK4eZ8QlyNYaJMu16R8Y6q2bGXaW3bhDDH9XnpmJqLdkrOz5d1tIUZsWx8iOQdvRES6lU56ddzWdqzFzH3bmUX1MRfeqlEfdUDDAa0Hu/rV3pQxnaTRJj8KT0yY1I0+4DJ8b1tGFOyRPt6eXu4nZDt6cQsAJAx8FHBKr5boVimb6cNllyMBdp15mUXaGSk6OB/UBIk20LR68j0THjU1h1V7cl9XC7vLX8XcpRdGd9s+W8yQKs1gbCThwVjiORxts+wh89F4IPUKP
-  file: app/build/outputs/apk/debug/*.apk
+    secure: gQah+RCMV42L007gB/UHS2zKbbt29LyoNcJ4y/IAUtK0baf6yJOj2gPcWEbxIjlBpPmWyBqceacsuWVkxmbTB8gxjVHRuckIOHwX3NUoVoszpK+/q2FO4v31YyoSJwLsgg6/LBQQc7mvDY6N4kka/UVGJp2iiZPY99mpnTju6cfNf1rcjaTAdDDQZJYfxYLwgIP5PUnvdVzxyc1aIlAob7GNPJ9lGXSwNc64dSPCmcoPN1TAijZcONNEiK5gjRUkBoWLxLxFjq2hjGidydwNnb7ivT3NGnBv7trSLqUWzSavwZq5dpm1nUC9M1nkC7iCsjXYtmB4nlF1dbc7O1cUAS5PIn2MtOelgjNgz+w72rCTiUFeHzTOfMNjsOe/eWdIat1lenOaDMRLCi1d+wI2yxVYMI0nuJ4Fr3Z2tfa1OMguoLBFz/aJZEgqLnHooWHHBvzDBvWraX7xKCXv9TJ0StSKwRw1HWC4XfuHSqcpp4rh7wr8m0sWb1qpMh58+WBTMQcRkXEf+AFx3YTNz3VRCS2o6Us+byEq6DKmYwn45LrL8dgDG6cSXGVM38L+eVkfLO4GI7qzzSFqq9hgyAcmik2U2s+6AjDoMB0QCpjMdxtpV6HOdemXyMlcTKxzb3EHk5WgX/A9MuglOxkVA5bARC7U2EnBHi72tK+dW1+nNEY=
+  file: app/build/outputs/apk/AndroidSerial.apk
   skip_cleanup: true
   on:
     tags: true
+    all_branches: true
+    repo: jp1017/AndroidSerialPort

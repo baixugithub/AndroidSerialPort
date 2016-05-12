@@ -1,6 +1,6 @@
 ## AndroidSerialPort
 
-[![Join the chat at https://gitter.im/jp1017/AndroidSerialPort](https://badges.gitter.im/jp1017/AndroidSerialPort.svg)](https://gitter.im/jp1017/AndroidSerialPort?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/jp1017/AndroidSerialPort.svg?branch=master)](https://travis-ci.org/jp1017/AndroidSerialPort) [![GitHub stars](https://img.shields.io/github/stars/badges/shields.svg?style=social&label=Star&maxAge=2592000?style=plastic)](https://github.com/jp1017/AndroidSerialPort)
+[![Join the chat at https://gitter.im/jp1017/AndroidSerialPort](https://badges.gitter.im/jp1017/AndroidSerialPort.svg)](https://gitter.im/jp1017/AndroidSerialPort?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/jp1017/AndroidSerialPort.svg?branch=master)](https://travis-ci.org/jp1017/AndroidSerialPort) [![GitHub stars](https://img.shields.io/github/stars/jp1017/AndroidSerialPort.svg?style=social&label=Star&maxAge=10800)](https://github.com/jp1017/AndroidSerialPort)
 
 安卓串口相关操作
 

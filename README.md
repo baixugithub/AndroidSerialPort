@@ -25,3 +25,7 @@
 涉及到的 jni 开发可以参考：[【Android 应用开发】Android 开发 之 JNI入门 - NDK从入门到精通](http://blog.csdn.net/shulianghan/article/details/18964835)
 
 jni 开发遇到的坑：https://github.com/jp1017/Android-Collection/issues/10
+
+## 20171011更新
+
+刚刚发现另一个库: https://github.com/felHR85/UsbSerial

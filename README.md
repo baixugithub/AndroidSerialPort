@@ -2,6 +2,12 @@
 
 [![Join the chat at https://gitter.im/jp1017/AndroidSerialPort](https://badges.gitter.im/jp1017/AndroidSerialPort.svg)](https://gitter.im/jp1017/AndroidSerialPort?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/jp1017/AndroidSerialPort.svg?branch=master)](https://travis-ci.org/jp1017/AndroidSerialPort) [![GitHub stars](https://img.shields.io/github/stars/jp1017/AndroidSerialPort.svg?style=social&label=Star&maxAge=10800)](https://github.com/jp1017/AndroidSerialPort)
 
+## 20190307更新
+
+https://github.com/licheedev/Android-SerialPort-API
+
+https://github.com/licheedev/Android-SerialPort-Tool
+
 安卓串口相关操作
 
 <img src="https://cloud.githubusercontent.com/assets/7868514/13865849/dee51aa8-ecea-11e5-99cd-0d8efa532314.png" width="320" />
